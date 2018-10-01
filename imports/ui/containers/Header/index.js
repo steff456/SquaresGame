@@ -1,16 +1,16 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-import LoginButtons from '../../components/LoginButtons/index';
+import { Image, Container } from 'semantic-ui-react';
 
+import MainNavBar from './MainNavBar';
 export default class Header extends React.Component {
   render() {
     return (
-      <header className='Header'>
-        <b>Header</b> &nbsp;
-        <NavLink activeClassName="active" exact to="/">Home</NavLink>
-        <NavLink to="/bad-url">Not Found Page</NavLink>
-        <LoginButtons align='left' />
+      <header>
+        <Container className="header-container d-flex justify-content-between align-items-stretch">
+          <MainNavBar />
+        </Container>
       </header>
     );
   }
