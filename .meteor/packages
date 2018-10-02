@@ -22,3 +22,4 @@ accounts-ui
 accounts-password
 gadicc:blaze-react-component
 static-html
+react-meteor-data
