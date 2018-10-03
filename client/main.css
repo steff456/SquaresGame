@@ -3,7 +3,29 @@ body {
   margin: 0;
 }
 
-header {
+.my-header {
   z-index: 999;
-  background-color: #948D9B;
+  background-color: #433A3F !important;
+  border-color: #433A3F !important;
+  position: absolute;
+}
+
+.header-text {
+  color: #fffefe !important;
+}
+
+.cube1 {
+  color: #DF57BC !important;
+}
+
+.cube2 {
+  color: #4CE0B3 !important;
+}
+
+.cube3 {
+  color: #F4D35E !important;
+}
+
+.cube4 {
+  color: #ED6A5E !important;
 }
