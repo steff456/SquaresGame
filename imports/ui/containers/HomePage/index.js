@@ -4,7 +4,7 @@ import Lobby from '../../components/Lobby/index';
 function Home() {
   return (
     <div>
-        <Lobby/>
+      <Lobby />
     </div>
   );
 }
