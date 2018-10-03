@@ -1,17 +1,22 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { NavLink, withRouter } from 'react-router-dom';
+import { Header, Segment } from 'semantic-ui-react';
 
 import LoginButtons from '../../components/LoginButtons/index';
 
 const MainNavBar = () => (
-  <nav className="navbar main-nav no-margin">
-    <ul className="navbar-nav d-flex justify-content-end align-items-stretch">
-      <li className="nav-item">
-        <LoginButtons align="left" />
-      </li>
-    </ul>
-  </nav>
+  <header>
+    <nav className="navbar main-nav no-margin">
+      <Segment className="navbar-nav d-flex justify-content-end align-items-stretch">
+        <Header as="h1" floated="right">
+          Squares
+        </Header>
+        <div className="nav-item active">
+          <LoginButtons align="right" />
+        </div>
+      </Segment>
+    </nav>
+  </header>
 );
 
 export default withRouter(MainNavBar);
