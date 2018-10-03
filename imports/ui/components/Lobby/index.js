@@ -9,55 +9,57 @@ class Lobby extends React.Component {
 
     constructor(props) {
         super(props);
+        this.joinGame = this.joinGame.bind(this);
     }
 
-    renderActiveGames(){
-        return this.props.games.map((g,i) =>{
+    renderActiveGames() {
+        return this.props.games.map((g, i) => {
             return (<li key={i}>
                 {g.id} - {g.status}
-                <Button key={g.id} onClick={()=> this.joinGame(g.id).bind(this)}> Join </Button>
-            </li>);   
+                <Button key={g.id} onClick={() => this.joinGame(g.id)}> Join </Button>
+            </li>);
         });
     }
 
-    joinGame(id){
+    joinGame(id) {
+        let game = Games.find({ id: id }).fetch();
+        Games.update(game[0]._id,
+            {
+                status: "playing",
+                player2_id: Meteor.userId(),
+            });
         alert("Join to game", id);
-     /*   Games.update({
-            id: Meteor.userId()},{                
-            status: "playing",
-            player2_id: Meteor.userId(),
-        });*/
     }
 
 
-    createNewGame(evt){
+    createNewGame(evt) {
         evt.preventDefault();
 
-        let exist = Games.find({id:Meteor.userId()}).fetch()
+        let exist = Games.find({ id: Meteor.userId() }).fetch()
 
-        if(exist.length != 0){
+        if (exist.length != 0) {
             alert("You have already a game")
             //TODO : GO TO GAME
         }
-        else{
+        else {
             alert("new game created");
             Games.insert({
-                id: Meteor.userId(),                
+                id: Meteor.userId(),
                 status: "waiting",
                 player2_id: null,
-                date: new Date()            
+                date: new Date()
             });
             //TODO : GO TO WAITING SOMEONE TO JOIN TO GAME
-        }        
+        }
     }
 
     render() {
-        return <div>            
+        return <div>
             <Button onClick={this.createNewGame.bind(this)}>Create new Game</Button>
             <ul>
                 {this.renderActiveGames()}
             </ul>
-    </div>
+        </div>
     }
 }
 
@@ -67,6 +69,6 @@ Lobby.propTypes = {
 
 export default withTracker(() => {
     return {
-        games: Games.find({status:"waiting", id: {$ne: Meteor.userId()}}).fetch()
+        games: Games.find({ status: "waiting", id: { $ne: Meteor.userId() } }).fetch()
     };
 })(Lobby);
