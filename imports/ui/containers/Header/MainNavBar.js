@@ -1,22 +1,38 @@
 import React from 'react';
-import { NavLink, withRouter } from 'react-router-dom';
-import { Header, Segment } from 'semantic-ui-react';
+import { withRouter } from 'react-router-dom';
+import {
+ Navbar, Nav, NavItem, Image 
+} from 'react-bootstrap';
 
 import LoginButtons from '../../components/LoginButtons/index';
 
 const MainNavBar = () => (
-  <header>
-    <nav className="navbar main-nav no-margin">
-      <Segment className="navbar-nav d-flex justify-content-end align-items-stretch">
-        <Header as="h1" floated="right">
+  <Navbar inverse collapseOnSelect className="my-header">
+    <Navbar.Header>
+      <Navbar.Brand>
+        <a href="/" className="header-text">
+          {' '}
           Squares
-        </Header>
-        <div className="nav-item active">
-          <LoginButtons align="left" />
-        </div>
-      </Segment>
-    </nav>
-  </header>
+        </a>
+      </Navbar.Brand>
+      <Navbar.Toggle />
+    </Navbar.Header>
+    <Navbar.Collapse>
+      <Nav>
+        <NavItem>
+          <span className="glyphicon glyphicon-unchecked cube1" />
+          <span className="glyphicon glyphicon-unchecked cube2" />
+          <span className="glyphicon glyphicon-unchecked cube3" />
+          <span className="glyphicon glyphicon-unchecked cube4" />
+        </NavItem>
+      </Nav>
+      <Nav pullRight>
+        <NavItem eventKey={1} href="#">
+          <LoginButtons align="right" />
+        </NavItem>
+      </Nav>
+    </Navbar.Collapse>
+  </Navbar>
 );
 
 export default withRouter(MainNavBar);
