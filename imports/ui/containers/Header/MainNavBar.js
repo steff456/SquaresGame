@@ -12,7 +12,7 @@ const MainNavBar = () => (
           Squares
         </Header>
         <div className="nav-item active">
-          <LoginButtons align="right" />
+          <LoginButtons align="left" />
         </div>
       </Segment>
     </nav>

@@ -28,18 +28,19 @@ class Lobby extends React.Component {
             {
                 status: "playing",
                 player2_id: Meteor.userId(),
+                player2_user: Meteor.user().username
             });
         this.changeGame(game[0]._id);
     }
 
-    changeGame(id){
+    changeGame(id) {
         this.props.onGame(id);
     }
 
     createNewGame(evt) {
         evt.preventDefault();
 
-        let exist = Games.find({ id: Meteor.userId() }).fetch()
+        let exist = Games.find({ id: Meteor.userId() }).fetch();
 
         if (exist.length != 0) {
             alert("You have already a game");
@@ -47,13 +48,16 @@ class Lobby extends React.Component {
         }
         else {
             alert("new game created");
-            Games.insert({
+            let newGame = Games.insert({
                 id: Meteor.userId(),
                 status: "waiting",
+                player1_id: Meteor.userId(),
+                player1_user: Meteor.user().username,
                 player2_id: null,
+                player2_user:null,
                 date: new Date()
             });
-            this.changeGame(game[0]._id);
+            this.changeGame(newGame);
         }
     }
 
@@ -70,7 +74,7 @@ class Lobby extends React.Component {
 
 Lobby.propTypes = {
     games: PropTypes.array.isRequired,
-    onGame : PropTypes.func
+    onGame: PropTypes.func
 }
 
 export default withTracker(() => {

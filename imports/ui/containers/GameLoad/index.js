@@ -1,6 +1,8 @@
 import React from 'react';
 import Lobby from '../../components/Lobby/index';
 import Game from '../../components/Game/index';
+import { Games } from '../../../api/games.js';
+import { Meteor } from 'meteor/meteor'
 
 export default class GameLoad extends React.Component {
 
@@ -9,19 +11,21 @@ export default class GameLoad extends React.Component {
 
         this.state = {
             game: null
-        }
-        this.changeGame = this.changeGame.bind(this);
+        }        
+        this.changeGame = this.changeGame.bind(this);        
     }
+
 
     Load(props){ 
         const id = props.game 
-        const game = props.onGame      
+        const game = props.onGame           
+
         if(id ==null){
             return <Lobby onGame={game}/>
         }
         else{
             return <Game onGame={game} id={id}/>
-        }
+        }        
     }
 
     changeGame(change){
