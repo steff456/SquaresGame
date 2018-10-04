@@ -1,56 +1,89 @@
 import React from 'react';
+import { withTracker } from 'meteor/react-meteor-data';
 import { Button } from 'semantic-ui-react';
-import { Meteor } from 'meteor/meteor'
+import { Meteor } from 'meteor/meteor';
 
 import { Games } from '../../../api/games.js';
-import { Match } from '../../../api/match.js';
+import { Matches } from '../../../api/match.js';
 
-export default class Game extends React.Component {
+class Game extends React.Component {
   constructor(props) {
     super(props);
     this.leaveGame = this.leaveGame.bind(this);
     this.getCurrentGame = this.getCurrentGame.bind(this);
+    this.renderBoard = this.renderBoard.bind(this);
+    this.state = {
+      turn: '',
+      start: false,
+    };
   }
-
-  state = {
-    turn: 'p1',
-    start: False,
-  };
 
   componentDidMount() {
     console.log(this.props);
     this.getCurrentGame();
   }
-    leaveGame() {
-        Meteor.call("games.remove", this.props.id);
-        this.props.onGame(null);
-    }
 
   componentDidUpdate() {
     console.log('******');
-    this.getPlayers();
+    console.log(this.state);
   }
 
   getCurrentGame() {
     const { id } = this.props;
     const g = Games.find({ id: { $ne: id } }).fetch();
-    console.log(g[g.length - 1]);
-    if (g.player2_id !== null) {
+    const actg = g[g.length - 1];
+    if (actg.player2_id !== null) {
       // Start game
+      const first = Math.random() > 0.5 ? 'p1' : 'p2';
+      this.setState({
+        start: true,
+        turn: first,
+      });
+      const params = {
+        gameId: id,
+        id1: actg.player1_id,
+        id2: actg.player2_id,
+        user1: actg.player1_user,
+        user2: actg.player2_user,
+        currentPlayer: first,
+      };
+      Meteor.call('matches.add', params, (err, match) => {
+        if (err) {
+          alert(err);
+        }
+        console.log('Match added!');
+      });
     }
   }
 
   leaveGame() {
-    const { id } = this.props;
-    Games.remove(id);
+    Meteor.call('games.remove', this.props.id);
     this.props.onGame(null);
   }
 
+  renderBoard() {
+    console.log(this.props.match);
+  }
+
   render() {
+    const { start } = this.state;
     return (
       <div>
         <Button onClick={this.leaveGame}>Leave the game</Button>
+        {start && (
+          <div>
+            <h1>Start game</h1>
+          </div>
+        )}
+        <div>{this.renderBoard()}</div>
       </div>
     );
   }
 }
+
+export default withTracker(() => {
+  Meteor.subscribe('matches');
+  return {
+    match: Matches.find({}, { sort: { _id: -1 }, limit: 1 }).fetch(),
+  };
+})(Game);
