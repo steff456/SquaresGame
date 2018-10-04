@@ -5,14 +5,13 @@ import { withTracker } from 'meteor/react-meteor-data';
 import { Games } from '../../../api/games.js';
 import { Meteor } from 'meteor/meteor'
 
-export default class GameLoad extends React.Component {
+class GameLoad extends React.Component {
 
     constructor(props) {
         super(props);
 
         this.state = {
             game: null,
-            userId: null
         }
         this.changeGame = this.changeGame.bind(this);
     }
@@ -20,7 +19,7 @@ export default class GameLoad extends React.Component {
 
     Load(props) {
         const id = props.game
-        const game = props.onGame        
+        const game = props.onGame
 
         if (id == null) {
             return <Lobby onGame={game} />
@@ -38,7 +37,15 @@ export default class GameLoad extends React.Component {
 
     render() {
         return <div>
-            <this.Load game={this.state.game} onGame={this.changeGame}/>
+            {this.props.currentUser ?
+                <this.Load game={this.state.game} onGame={this.changeGame} /> : 'HOLA'
+            }
         </div>
     }
 }
+
+export default withTracker(() => {
+    return {
+        currentUser: Meteor.user()
+    };
+})(GameLoad)
