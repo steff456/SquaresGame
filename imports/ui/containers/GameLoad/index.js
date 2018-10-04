@@ -2,7 +2,6 @@ import React from 'react';
 import Lobby from '../../components/Lobby/index';
 import Game from '../../components/Game/index';
 import { withTracker } from 'meteor/react-meteor-data';
-import { Games } from '../../../api/games.js';
 import { Meteor } from 'meteor/meteor'
 
 class GameLoad extends React.Component {
@@ -15,7 +14,6 @@ class GameLoad extends React.Component {
         }
         this.changeGame = this.changeGame.bind(this);
     }
-
 
     Load(props) {
         const id = props.game
@@ -37,10 +35,8 @@ class GameLoad extends React.Component {
 
     letters(text) {
         let array = (text).split("");
-        console.log(array)
         return array.map((g, i) => {
             let classes = "letters-div letter" + (i + 1) % 4
-            console.log(classes);
             return (
                 <div key={i} className={classes}>
                     {g}
@@ -55,16 +51,16 @@ class GameLoad extends React.Component {
                 <this.Load game={this.state.game} onGame={this.changeGame} />
                 :
                 <div className="letters-content">
-                    <div class="word">
+                    <div className="word">
                         <img src="https://raw.githubusercontent.com/steff456/SquaresGame/master/public/images/squares.gif" />
                     </div>
-                    <div class="word">
+                    <div className="word">
                         {this.letters("SQUARES")}
                     </div>
-                    <div class="word">
+                    <div className="word">
                         {this.letters("HAVE")}
                     </div>
-                    <div class="word">
+                    <div className="word">
                         {this.letters("FUN")}
                     </div>
                 </div>
@@ -75,6 +71,6 @@ class GameLoad extends React.Component {
 
 export default withTracker(() => {
     return {
-        currentUser: Meteor.user()
+        currentUser: Meteor.user(),
     };
 })(GameLoad)

@@ -50,8 +50,9 @@ Meteor.methods(
         "games.remove": function (id) {
             Games.remove(id);
         },
-        "games.track": function () {
-            return
+        "games.find": function () {
+            let game = Games.find({ $or: [{ player1_id: Meteor.userId() }, { player2_id: Meteor.userId() }] }).fetch();
+            return game;
         }
     }
 );
