@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button } from 'semantic-ui-react';
 import { Games } from '../../../api/games.js';
+import { Meteor } from 'meteor/meteor'
 
 
 export default class Game extends React.Component {
@@ -10,8 +11,8 @@ export default class Game extends React.Component {
         this.leaveGame = this.leaveGame.bind(this);
     }
 
-    leaveGame(){   
-        Games.remove(this.props.id);
+    leaveGame() {
+        Meteor.call("games.remove", this.props.id);
         this.props.onGame(null);
     }
 

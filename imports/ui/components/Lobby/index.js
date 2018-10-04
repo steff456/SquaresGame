@@ -23,14 +23,10 @@ class Lobby extends React.Component {
     }
 
     joinGame(id) {
-        let game = Games.find({ id: id }).fetch();
-        Games.update(game[0]._id,
-            {
-                status: "playing",
-                player2_id: Meteor.userId(),
-                player2_user: Meteor.user().username
-            });
-        this.changeGame(game[0]._id);
+        Meteor.call("games.update", id, (err, game) => {
+            if (err) { alert(err); return; }
+            this.changeGame(game);
+        });
     }
 
     changeGame(id) {
@@ -40,25 +36,12 @@ class Lobby extends React.Component {
     createNewGame(evt) {
         evt.preventDefault();
 
-        let exist = Games.find({ id: Meteor.userId() }).fetch();
+        alert("new game created");
 
-        if (exist.length != 0) {
-            alert("You have already a game");
-            this.changeGame(exist[0]._id);
-        }
-        else {
-            alert("new game created");
-            let newGame = Games.insert({
-                id: Meteor.userId(),
-                status: "waiting",
-                player1_id: Meteor.userId(),
-                player1_user: Meteor.user().username,
-                player2_id: null,
-                player2_user:null,
-                date: new Date()
-            });
-            this.changeGame(newGame);
-        }
+        Meteor.call("games.add", (err, game) => {
+            if (err) { alert(err); return; }
+            this.changeGame(game);
+        });
     }
 
 
@@ -78,6 +61,7 @@ Lobby.propTypes = {
 }
 
 export default withTracker(() => {
+    Meteor.subscribe("games");
     return {
         games: Games.find({ status: "waiting", id: { $ne: Meteor.userId() } }).fetch()
     };
