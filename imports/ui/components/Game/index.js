@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button } from 'semantic-ui-react';
+import { Meteor } from 'meteor/meteor'
 
 import { Games } from '../../../api/games.js';
 import { Match } from '../../../api/match.js';
@@ -20,6 +21,10 @@ export default class Game extends React.Component {
     console.log(this.props);
     this.getCurrentGame();
   }
+    leaveGame() {
+        Meteor.call("games.remove", this.props.id);
+        this.props.onGame(null);
+    }
 
   componentDidUpdate() {
     console.log('******');
