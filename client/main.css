@@ -29,3 +29,50 @@ body {
 .cube4 {
   color: #ED6A5E !important;
 }
+
+.letters-content{
+  display: flow-root;
+  justify-content: center;
+  padding: 10%;
+}
+.letters-div{
+  width: 70px;
+  color: #fffefe;
+  display: inline-block;
+  font-size: 40px;
+  text-align: center;
+}
+
+.letter1{
+  background-color: #DF57BC;
+}
+
+.letter2{
+  background-color: #4CE0B3;
+}
+
+.letter3{
+  background-color: #F4D35E;
+}
+
+.letter0{
+  background-color: #ED6A5E;
+}
+
+.word{
+  display: flex;
+  justify-content: center;
+  margin: 20px
+}
+
+#login-buttons-password, .login-button{
+  background: #433A3F !important; 
+}
+
+.login-link-text{
+  color:  #fffefe;
+  text-transform: uppercase;
+}
+.login-close-text:hover, .login-link-text:hover{
+  color: #F4D35E
+}

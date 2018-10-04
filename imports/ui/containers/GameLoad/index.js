@@ -35,10 +35,39 @@ class GameLoad extends React.Component {
         });
     }
 
+    letters(text) {
+        let array = (text).split("");
+        console.log(array)
+        return array.map((g, i) => {
+            let classes = "letters-div letter" + (i + 1) % 4
+            console.log(classes);
+            return (
+                <div key={i} className={classes}>
+                    {g}
+                </div>
+            );
+        });
+    }
+
     render() {
         return <div>
             {this.props.currentUser ?
-                <this.Load game={this.state.game} onGame={this.changeGame} /> : 'HOLA'
+                <this.Load game={this.state.game} onGame={this.changeGame} />
+                :
+                <div className="letters-content">
+                    <div class="word">
+                        <img src="https://raw.githubusercontent.com/steff456/SquaresGame/master/public/images/squares.gif" />
+                    </div>
+                    <div class="word">
+                        {this.letters("SQUARES")}
+                    </div>
+                    <div class="word">
+                        {this.letters("HAVE")}
+                    </div>
+                    <div class="word">
+                        {this.letters("FUN")}
+                    </div>
+                </div>
             }
         </div>
     }
