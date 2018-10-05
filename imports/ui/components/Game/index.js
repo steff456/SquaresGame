@@ -19,26 +19,21 @@ class Game extends React.Component {
   }
 
   componentDidMount() {
-    console.log(this.props);
+    // console.log(this.props);
     this.getCurrentGame();
   }
 
   componentDidUpdate() {
-    console.log('******');
-    console.log(this.state);
+    // console.log('******');
+    // console.log(this.state);
   }
 
   getCurrentGame() {
     const { id } = this.props;
     const g = Games.find({ id: { $ne: id } }).fetch();
     const actg = g[g.length - 1];
-    if (actg.player2_id !== null) {
-      // Start game
+    if (actg.player2_id === null) {
       const first = Math.random() > 0.5 ? 'p1' : 'p2';
-      this.setState({
-        start: true,
-        turn: first,
-      });
       const params = {
         gameId: id,
         id1: actg.player1_id,
@@ -53,6 +48,21 @@ class Game extends React.Component {
         }
         console.log('Match added!');
       });
+    } else {
+      // Start game
+      const params = {
+        gameId: id,
+        id2: actg.player2_id,
+        user2: actg.player2_user,
+      };
+      Meteor.call('matches.join', params, (err, match) => {
+        if (err) {
+          alert(err);
+        }
+        console.log('Joined!');
+        console.log(match);
+        this.renderBoard();
+      });
     }
   }
 
@@ -62,7 +72,13 @@ class Game extends React.Component {
   }
 
   renderBoard() {
-    console.log(this.props.match);
+    // console.log('render', this.props.match);
+    return (
+      <div>
+        {' '}
+        <h1> Lo logramos!!</h1>
+      </div>
+    );
   }
 
   render() {
@@ -84,6 +100,6 @@ class Game extends React.Component {
 export default withTracker(() => {
   Meteor.subscribe('matches');
   return {
-    match: Matches.find({}, { sort: { _id: -1 }, limit: 1 }).fetch(),
+    match: Matches.find({}).fetch(),
   };
 })(Game);

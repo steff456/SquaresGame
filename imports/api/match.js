@@ -12,14 +12,11 @@ if (Meteor.isServer) {
 Meteor.methods({
   'matches.add': (params) => {
     const {
-      gameId, id1, id2, user1, user2, currentPlayer,
-    } = params;
-    console.log(gameId);
-    console.log(id1);
-    console.log(id2);
-    console.log(user1);
-    console.log(user2);
-    console.log(currentPlayer);
+ gameId: game, id1, id2, user1, user2, currentPlayer 
+} = params;
+    const { _id: gameId } = game;
+    console.log('gameId', gameId);
+    console.log('params', params);
     if (!gameId) {
       throw new Meteor.Error('Not authorized');
     }
@@ -35,21 +32,37 @@ Meteor.methods({
         linesY.push(ob);
       }
     }
-    Matches.upsert(
-      { id: gameId },
-      {
-        status: 'on game',
-        player1_id: id1,
-        player1_user: user1,
+    Matches.insert({
+      _id: gameId,
+      status: 'waiting',
+      player1_id: id1,
+      player1_user: user1,
+      player2_id: id2,
+      player2_user: user2,
+      current_player: currentPlayer,
+      linesX,
+      linesY,
+    });
+    console.log(gameId);
+    const match = Matches.findOne(gameId);
+    console.log('created match', match);
+    return match;
+  },
+  'matches.join': (params) => {
+    console.log('*********');
+    const { gameId, id2, user2 } = params;
+    console.log('params', params);
+    actg = Matches.findOne(gameId);
+    console.log('matches found', actg);
+    Matches.update(gameId, {
+      $set: {
         player2_id: id2,
         player2_user: user2,
-        current_player: currentPlayer,
-        linesX,
-        linesY,
+        status: 'onGame',
       },
-    );
-
-    const match = Matches.findOne({ gameId });
+    });
+    const match = Matches.findOne(gameId);
+    console.log('updated match', match);
     return match;
   },
 });
