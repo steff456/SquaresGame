@@ -17,11 +17,11 @@ class Game extends React.Component {
     this.leaveGame = this.leaveGame.bind(this);
     this.getCurrentGame = this.getCurrentGame.bind(this);
     this.renderBoard = this.renderBoard.bind(this);
-    this.changeDocument = this.changeDocument.bind(this);
     this.state = {
       turn: '',
       start: false,
-      gameDoc: []
+      gameDoc: [],
+      gameId: null
     };
   }
 
@@ -56,6 +56,8 @@ class Game extends React.Component {
         if (err) {
           alert(err);
         }
+        if (match)
+          this.setState({ gameId: match._id });
         console.log('Match added!');
       });
     } else {
@@ -71,6 +73,8 @@ class Game extends React.Component {
         }
         console.log('Joined!');
         console.log(match);
+        if (match)
+          this.setState({ gameId: match._id });
         this.renderBoard();
       });
     }
@@ -129,23 +133,35 @@ class Game extends React.Component {
         if (this.props.match[0].stateBoard[id_board])
           stateB = this.props.match[0].stateBoard[id_board];
     }
+
+    let stateBSq = "NO"
+    if (this.props.match[0]) {
+      if (this.props.match[0].squares)
+        if (this.props.match[0].squares[id_board])
+          stateBSq = this.props.match[0].squares[id_board];
+    }
+
     if (i % 2 === 0 && j % 2 === 0) {
       return <Space key={id_board} />
     }
     else if (i % 2 === 1 && j % 2 !== 0) {
 
-      return <Square key={id_board} />
+      return <Square key={id_board} stateBoardSq={stateBSq} />
     }
     else if (i % 2 === 1 && j % 2 !== 1) {
-      return <LineVertical key={id_board} id={id_board} stateBoard={stateB} play={this.changeDocument} />
+      return <LineVertical key={id_board} id={id_board} stateBoard={stateB} play={this.changeDocument.bind(this)} />
     }
     else {
-      return <LineHorizontal key={id_board} id={id_board} stateBoard={stateB} />
+      return <LineHorizontal key={id_board} id={id_board} stateBoard={stateB} play={this.changeDocument.bind(this)} />
     }
   }
 
   changeDocument(id) {
-    console.log(id);
+
+    const first = this.state.turn == 'p2' ? 'p1' : 'p2';
+    this.setState({ turn: first });
+
+    Meteor.call('matches.update', this.state.gameId, id, first);
   }
 
 
