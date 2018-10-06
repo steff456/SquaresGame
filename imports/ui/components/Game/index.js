@@ -114,10 +114,6 @@ class Game extends React.Component {
       console.log(i, j, "=====================SPACE");
       return <Space key={i * j + j} />
     }
-    else if (i % 2 === 0 && j % 2 !== 1) {
-      console.log(i, j, "=====================HOR");
-      return <LineHorizontal key={i * j + j} />
-    }
     else if (i % 2 === 1 && j % 2 !== 0) {
       console.log(i, j, "=====================VER");
       return <Square key={i * j + j} />
@@ -125,6 +121,10 @@ class Game extends React.Component {
     else if (i % 2 === 1 && j % 2 !== 1) {
       console.log(i, j, "=====================SQ");
       return <LineVertical key={i * j + j} />
+    }
+    else {
+      console.log(i, j, "=====================HOR");
+      return <LineHorizontal key={i * j + j} />
     }
   }
 
