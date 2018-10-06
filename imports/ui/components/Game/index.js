@@ -6,6 +6,11 @@ import { Meteor } from 'meteor/meteor';
 import { Games } from '../../../api/games.js';
 import { Matches } from '../../../api/match.js';
 
+import Square from './square';
+import LineVertical from './line_vertical';
+import LineHorizontal from './line_horizontal'
+import Space from './space'
+
 class Game extends React.Component {
   constructor(props) {
     super(props);
@@ -73,12 +78,54 @@ class Game extends React.Component {
 
   renderBoard() {
     // console.log('render', this.props.match);
+
     return (
       <div>
         {' '}
         <h1> Lo logramos!!</h1>
+        <div class="board">
+          <div className="board-row">
+            {this.renderline(6, 0)}
+          </div>
+          <div className="board-row">
+            {this.renderline(6, 1)}
+          </div>
+          <div className="board-row">
+            {this.renderline(6, 2)}
+          </div>
+          <div className="board-row">
+            {this.renderline(6, 3)}
+          </div>
+        </div>
       </div>
     );
+  }
+
+  renderline(size, j) {
+    let temp = Array.from({ length: size }, (v, i) => i);
+    console.log(temp, "===ARRAY")
+    return temp.map((g, i) => (
+      this.getDivType(j, i)
+    ));
+  }
+
+  getDivType(i, j) {
+    if (i % 2 === 0 && j % 2 === 0) {
+      console.log(i, j, "=====================SPACE");
+      return <Space key={i * j + j} />
+    }
+    else if (i % 2 === 0 && j % 2 !== 1) {
+      console.log(i, j, "=====================HOR");
+      return <LineHorizontal key={i * j + j} />
+    }
+    else if (i % 2 === 1 && j % 2 !== 0) {
+      console.log(i, j, "=====================VER");
+      return <Square key={i * j + j} />
+    }
+    else if (i % 2 === 1 && j % 2 !== 1) {
+      console.log(i, j, "=====================SQ");
+      return <LineVertical key={i * j + j} />
+    }
   }
 
   render() {

@@ -173,3 +173,38 @@ ul {
 .join{
   height: 100%;
 }
+
+.board-square{
+  width: 50px;
+  height: 50px;
+  background: blue;
+}
+
+
+.board-line-vertical{
+  width: 10px;
+  height: 50px;
+  background: green;
+}
+
+.board-line-horizontal{
+  width: 50px;
+  height: 10px;
+  background: chocolate;
+}
+
+.board-space{
+  width: 10px;
+  height: 10px;
+  background: crimson;
+}
+
+.board-row{
+  display: inline-flex;
+  min-width: 100px;
+  min-height: 100px;
+}
+
+.board{
+  display: block;
+}
