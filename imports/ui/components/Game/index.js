@@ -17,11 +17,15 @@ class Game extends React.Component {
     this.leaveGame = this.leaveGame.bind(this);
     this.getCurrentGame = this.getCurrentGame.bind(this);
     this.renderBoard = this.renderBoard.bind(this);
+    this.changeDocument = this.changeDocument.bind(this);
     this.state = {
       turn: '',
       start: false,
+      gameDoc: []
     };
   }
+
+
 
   componentDidMount() {
     // console.log(this.props);
@@ -39,6 +43,7 @@ class Game extends React.Component {
     const actg = g[g.length - 1];
     if (actg.player2_id === null) {
       const first = Math.random() > 0.5 ? 'p1' : 'p2';
+      this.setState({ turn: first });
       const params = {
         gameId: id,
         id1: actg.player1_id,
@@ -83,7 +88,7 @@ class Game extends React.Component {
       <div>
         {' '}
         <h1> Lo logramos!!</h1>
-        <div class="board">
+        <div className="board">
           {this.renderSquareBoard()}
         </div>
       </div>
@@ -117,19 +122,32 @@ class Game extends React.Component {
   }
 
   getDivType(i, j) {
+    let id_board = i + "-" + j;
+    let stateB = "NO"
+    if (this.props.match[0]) {
+      if (this.props.match[0].stateBoard)
+        if (this.props.match[0].stateBoard[id_board])
+          stateB = this.props.match[0].stateBoard[id_board];
+    }
     if (i % 2 === 0 && j % 2 === 0) {
-      return <Space key={i + "-" + j} />
+      return <Space key={id_board} />
     }
     else if (i % 2 === 1 && j % 2 !== 0) {
-      return <Square key={i + "-" + j} />
+
+      return <Square key={id_board} />
     }
     else if (i % 2 === 1 && j % 2 !== 1) {
-      return <LineVertical key={i + "-" + j} />
+      return <LineVertical key={id_board} id={id_board} stateBoard={stateB} play={this.changeDocument} />
     }
     else {
-      return <LineHorizontal key={i + "-" + j} />
+      return <LineHorizontal key={id_board} id={id_board} stateBoard={stateB} />
     }
   }
+
+  changeDocument(id) {
+    console.log(id);
+  }
+
 
   render() {
     const { start } = this.state;
@@ -142,6 +160,7 @@ class Game extends React.Component {
           </div>
         )}
         <div>{this.renderBoard()}</div>
+        {console.log(this.props.match[0], "==============================================")}
       </div>
     );
   }

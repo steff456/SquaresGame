@@ -217,3 +217,15 @@ ul {
   height: 370px;
   font-size: 1px;
 }
+
+.board-color-none{
+  background: red;
+}
+
+.board-color-p1{
+  background: #ED6A5E;
+}
+
+.board-color-p2{
+  background: #4CE0B3;
+}
