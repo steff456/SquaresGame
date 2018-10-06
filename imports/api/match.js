@@ -12,8 +12,8 @@ if (Meteor.isServer) {
 Meteor.methods({
   'matches.add': (params) => {
     const {
- gameId: game, id1, id2, user1, user2, currentPlayer 
-} = params;
+      gameId: game, id1, id2, user1, user2, currentPlayer
+    } = params;
     const { _id: gameId } = game;
     console.log('gameId', gameId);
     console.log('params', params);

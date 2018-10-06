@@ -84,26 +84,33 @@ class Game extends React.Component {
         {' '}
         <h1> Lo logramos!!</h1>
         <div class="board">
-          <div className="board-row">
-            {this.renderline(6, 0)}
-          </div>
-          <div className="board-row">
-            {this.renderline(6, 1)}
-          </div>
-          <div className="board-row">
-            {this.renderline(6, 2)}
-          </div>
-          <div className="board-row">
-            {this.renderline(6, 3)}
-          </div>
+          {this.renderSquareBoard()}
         </div>
       </div>
     );
   }
 
+  renderSquareBoard() {
+    let temp = Array.from({ length: 13 }, (v, i) => i);
+    return temp.map((g, i) => (
+      <div key={"line-" + i} className={this.renderSquareAux(i)}>
+        {this.renderline(13, i)}
+      </div>
+    ));
+  }
+
+  renderSquareAux(i) {
+    if (i % 2 == 0) {
+      return "board-row-even"
+    }
+    else {
+      return "board-row-odd"
+    }
+  }
+
   renderline(size, j) {
     let temp = Array.from({ length: size }, (v, i) => i);
-    console.log(temp, "===ARRAY")
+
     return temp.map((g, i) => (
       this.getDivType(j, i)
     ));
@@ -111,20 +118,16 @@ class Game extends React.Component {
 
   getDivType(i, j) {
     if (i % 2 === 0 && j % 2 === 0) {
-      console.log(i, j, "=====================SPACE");
-      return <Space key={i * j + j} />
+      return <Space key={i + "-" + j} />
     }
     else if (i % 2 === 1 && j % 2 !== 0) {
-      console.log(i, j, "=====================VER");
-      return <Square key={i * j + j} />
+      return <Square key={i + "-" + j} />
     }
     else if (i % 2 === 1 && j % 2 !== 1) {
-      console.log(i, j, "=====================SQ");
-      return <LineVertical key={i * j + j} />
+      return <LineVertical key={i + "-" + j} />
     }
     else {
-      console.log(i, j, "=====================HOR");
-      return <LineHorizontal key={i * j + j} />
+      return <LineHorizontal key={i + "-" + j} />
     }
   }
 
