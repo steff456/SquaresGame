@@ -1,15 +1,15 @@
-import React from 'react';
-import { withTracker } from 'meteor/react-meteor-data';
-import { Button } from 'semantic-ui-react';
-import { Meteor } from 'meteor/meteor';
+import React from "react";
+import { withTracker } from "meteor/react-meteor-data";
+import { Container, Grid, Button } from "semantic-ui-react";
+import { Meteor } from "meteor/meteor";
 
-import { Games } from '../../../api/games.js';
-import { Matches } from '../../../api/match.js';
+import { Games } from "../../../api/games.js";
+import { Matches } from "../../../api/match.js";
 
-import Square from './square';
-import LineVertical from './line_vertical';
-import LineHorizontal from './line_horizontal'
-import Space from './space'
+import Square from "./square";
+import LineVertical from "./line_vertical";
+import LineHorizontal from "./line_horizontal";
+import Space from "./space";
 
 class Game extends React.Component {
   constructor(props) {
@@ -18,14 +18,12 @@ class Game extends React.Component {
     this.getCurrentGame = this.getCurrentGame.bind(this);
     this.renderBoard = this.renderBoard.bind(this);
     this.state = {
-      turn: '',
+      turn: "",
       start: false,
       gameDoc: [],
       gameId: null
     };
   }
-
-
 
   componentDidMount() {
     // console.log(this.props);
@@ -42,7 +40,7 @@ class Game extends React.Component {
     const g = Games.find({ id: { $ne: id } }).fetch();
     const actg = g[g.length - 1];
     if (actg.player2_id === null) {
-      const first = Math.random() > 0.5 ? 'p1' : 'p2';
+      const first = Math.random() > 0.5 ? "p1" : "p2";
       this.setState({ turn: first });
       const params = {
         gameId: id,
@@ -50,38 +48,36 @@ class Game extends React.Component {
         id2: actg.player2_id,
         user1: actg.player1_user,
         user2: actg.player2_user,
-        currentPlayer: first,
+        currentPlayer: first
       };
-      Meteor.call('matches.add', params, (err, match) => {
+      Meteor.call("matches.add", params, (err, match) => {
         if (err) {
           alert(err);
         }
-        if (match)
-          this.setState({ gameId: match._id });
-        console.log('Match added!');
+        if (match) this.setState({ gameId: match._id });
+        console.log("Match added!");
       });
     } else {
       // Start game
       const params = {
         gameId: id,
         id2: actg.player2_id,
-        user2: actg.player2_user,
+        user2: actg.player2_user
       };
-      Meteor.call('matches.join', params, (err, match) => {
+      Meteor.call("matches.join", params, (err, match) => {
         if (err) {
           alert(err);
         }
-        console.log('Joined!');
+        console.log("Joined!");
         console.log(match);
-        if (match)
-          this.setState({ gameId: match._id });
+        if (match) this.setState({ gameId: match._id });
         this.renderBoard();
       });
     }
   }
 
   leaveGame() {
-    Meteor.call('games.remove', this.props.id);
+    Meteor.call("games.remove", this.props.id);
     this.props.onGame(null);
   }
 
@@ -90,17 +86,14 @@ class Game extends React.Component {
 
     return (
       <div>
-        {' '}
-        <h1> Lo logramos!!</h1>
-        <div className="board">
-          {this.renderSquareBoard()}
-        </div>
+        {" "}
+        <div className="board">{this.renderSquareBoard()}</div>
       </div>
     );
   }
 
   renderSquareBoard() {
-    let temp = Array.from({ length: 13 }, (v, i) => i);
+    const temp = Array.from({ length: 13 }, (v, i) => i);
     return temp.map((g, i) => (
       <div key={"line-" + i} className={this.renderSquareAux(i)}>
         {this.renderline(13, i)}
@@ -110,81 +103,90 @@ class Game extends React.Component {
 
   renderSquareAux(i) {
     if (i % 2 == 0) {
-      return "board-row-even"
+      return "board-row-even";
     }
-    else {
-      return "board-row-odd"
-    }
+    return "board-row-odd";
   }
 
   renderline(size, j) {
-    let temp = Array.from({ length: size }, (v, i) => i);
+    const temp = Array.from({ length: size }, (v, i) => i);
 
-    return temp.map((g, i) => (
-      this.getDivType(j, i)
-    ));
+    return temp.map((g, i) => this.getDivType(j, i));
   }
 
   getDivType(i, j) {
-    let id_board = i + "-" + j;
-    let stateB = "NO"
+    const id_board = `${i}-${j}`;
+    let stateB = "NO";
     if (this.props.match[0]) {
-      if (this.props.match[0].stateBoard)
-        if (this.props.match[0].stateBoard[id_board])
+      if (this.props.match[0].stateBoard) {
+        if (this.props.match[0].stateBoard[id_board]) {
           stateB = this.props.match[0].stateBoard[id_board];
+        }
+      }
     }
 
-    let stateBSq = "NO"
+    let stateBSq = "NO";
     if (this.props.match[0]) {
-      if (this.props.match[0].squares)
-        if (this.props.match[0].squares[id_board])
+      if (this.props.match[0].squares) {
+        if (this.props.match[0].squares[id_board]) {
           stateBSq = this.props.match[0].squares[id_board];
+        }
+      }
     }
 
     if (i % 2 === 0 && j % 2 === 0) {
-      return <Space key={id_board} />
+      return <Space key={id_board} />;
     }
-    else if (i % 2 === 1 && j % 2 !== 0) {
-
-      return <Square key={id_board} stateBoardSq={stateBSq} />
+    if (i % 2 === 1 && j % 2 !== 0) {
+      return <Square key={id_board} stateBoardSq={stateBSq} />;
     }
-    else if (i % 2 === 1 && j % 2 !== 1) {
-      return <LineVertical key={id_board} id={id_board} stateBoard={stateB} play={this.changeDocument.bind(this)} />
+    if (i % 2 === 1 && j % 2 !== 1) {
+      return (
+        <LineVertical
+          key={id_board}
+          id={id_board}
+          stateBoard={stateB}
+          play={this.changeDocument.bind(this)}
+        />
+      );
     }
-    else {
-      return <LineHorizontal key={id_board} id={id_board} stateBoard={stateB} play={this.changeDocument.bind(this)} />
-    }
+    return (
+      <LineHorizontal
+        key={id_board}
+        id={id_board}
+        stateBoard={stateB}
+        play={this.changeDocument.bind(this)}
+      />
+    );
   }
 
   changeDocument(id) {
-
-    const first = this.state.turn == 'p2' ? 'p1' : 'p2';
+    const first = this.state.turn == "p2" ? "p1" : "p2";
     this.setState({ turn: first });
 
-    Meteor.call('matches.update', this.state.gameId, id, first);
+    Meteor.call("matches.update", this.state.gameId, id, first);
   }
-
 
   render() {
     const { start } = this.state;
     return (
-      <div>
-        <Button onClick={this.leaveGame}>Leave the game</Button>
-        {start && (
-          <div>
-            <h1>Start game</h1>
-          </div>
-        )}
-        <div>{this.renderBoard()}</div>
-        {console.log(this.props.match[0], "==============================================")}
+      <div className="d-flex justify-content-center align-items-center">
+        <Container textAlign="center">
+          <Grid centered>
+            <Grid.Column>
+              <Button onClick={this.leaveGame}>Leave the game</Button>
+            </Grid.Column>
+            <Grid.Column>{this.renderBoard()}</Grid.Column>
+          </Grid>
+        </Container>
       </div>
     );
   }
 }
 
 export default withTracker(() => {
-  Meteor.subscribe('matches');
+  Meteor.subscribe("matches");
   return {
-    match: Matches.find({}).fetch(),
+    match: Matches.find({}).fetch()
   };
 })(Game);

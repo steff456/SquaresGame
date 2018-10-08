@@ -30,12 +30,13 @@ body {
   color: #ED6A5E !important;
 }
 
-.letters-content{
+.letters-content {
   display: flow-root;
   justify-content: center;
   padding: 8%;
 }
-.letters-div{
+
+.letters-div {
   width: 70px;
   color: #fffefe;
   display: inline-block;
@@ -43,37 +44,40 @@ body {
   text-align: center;
 }
 
-.letter1{
+.letter1 {
   background-color: #DF57BC;
 }
 
-.letter2{
+.letter2 {
   background-color: #4CE0B3;
 }
 
-.letter3{
+.letter3 {
   background-color: #F4D35E;
 }
 
-.letter0{
+.letter0 {
   background-color: #ED6A5E;
 }
 
-.word{
+.word {
   display: flex;
   justify-content: center;
   margin: 20px
 }
 
-#login-buttons-password, .login-button{
-  background: #433A3F !important; 
+#login-buttons-password,
+.login-button {
+  background: #433A3F !important;
 }
 
-.login-link-text{
-  color:  #fffefe;
+.login-link-text {
+  color: #fffefe;
   text-transform: uppercase;
 }
-.login-close-text:hover, .login-link-text:hover{
+
+.login-close-text:hover,
+.login-link-text:hover {
   color: #F4D35E
 }
 
@@ -87,7 +91,7 @@ body {
   max-width: 96%;
   height: 50vh;
   max-height: 1000px;
-  border-bottom: 5px solid #ED6A5E;  
+  border-bottom: 5px solid #ED6A5E;
 }
 
 .bar {
@@ -120,32 +124,32 @@ body {
   margin: 0;
 }
 
-.container2 { 
+.container2 {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   margin-bottom: 35px;
-  font-family:  Merriweather;
+  font-family: Merriweather;
   font-weight: bold;
   color: #555;
   width: 50%;
   padding-right: 10%;
 }
 
-.container1{
+.container1 {
   float: left;
   width: 50%;
   min-height: 100%;
   padding: 3% 10%;
 }
 
-.game{
+.game {
   display: flex;
   justify-content: center;
 }
 
-.button{
+.button {
   width: 100%;
   background: white;
   border: 2px solid #DF57BC;
@@ -154,7 +158,7 @@ body {
   margin-bottom: 10px;
 }
 
-.newGame-btt{
+.newGame-btt {
   border: 2px solid #4CE0B3 !important;
 }
 
@@ -163,18 +167,17 @@ ul {
   padding: 0px;
 }
 
-.legend1
-{  
+.legend1 {
   text-align: center;
   max-height: 80%;
   overflow: auto;
 }
 
-.join{
+.join {
   height: 100%;
 }
 
-.board-square{
+.board-square {
   width: 50px;
   height: 50px;
   background: white;
@@ -184,51 +187,52 @@ ul {
 }
 
 
-.board-line-vertical{
+.board-line-vertical {
   width: 10px;
   height: 50px;
   background: gray;
 }
 
-.board-line-horizontal{
+.board-line-horizontal {
   width: 50px;
   height: 10px;
   background: gray;
 }
 
-.board-space{
+.board-space {
   width: 10px;
   height: 10px;
   background: white;
 }
 
-.board-row-odd{
+.board-row-odd {
   display: inline-flex;
   min-width: 370px;
   min-height: 50px;
 }
 
-.board-row-even{
+.board-row-even {
   display: inline-flex;
   min-width: 370px;
   min-height: 10px;
 }
 
-.board{
+.board {
   display: block;
   width: 370px;
   height: 370px;
   font-size: 1px;
+  margin: auto;
 }
 
-.board-color-none{
+.board-color-none {
   background: gray;
 }
 
-.board-color-p1{
+.board-color-p1 {
   background: #ED6A5E;
 }
 
-.board-color-p2{
+.board-color-p2 {
   background: #4CE0B3;
 }
