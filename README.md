@@ -9,7 +9,7 @@ The main objective of this project was to develop a multiplayer real time dots a
 ## Demo
 
 The demo can be found [here!](https://squares-game123.herokuapp.com/)
-![screen](https://github.com/steff456/SquaresGame/public/images/screen.png)
+![screen](https://raw.githubusercontent.com/steff456/SquaresGame/master/public/images/screen.png)
 
 ## How to run
 
