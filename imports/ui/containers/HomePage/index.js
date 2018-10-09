@@ -1,3 +1,6 @@
+//no se deberían dejar TODOS en la entrega final, porque dice lo que no se terminó
+//use strict
+
 import React from 'react';
 import GameLoad from '../../containers/GameLoad/index';
 
