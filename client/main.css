@@ -1,3 +1,8 @@
+/*Andrés: Al utilizar tantos estilos dentro de un mismo archivo css, sería bueno que agregaran comentarios para
+tener claridad sobre en qué partes se utilizan. Además recuerden que utilizar el !important no es una buena práctica, 
+les recomiendo ajustar sus reglas de estilo para que no lo necesiten.
+*/
+
 body {
   font-family: sans-serif;
   margin: 0;
