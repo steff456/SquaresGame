@@ -3,6 +3,7 @@ body {
   margin: 0;
 }
 
+/*Intentar no usar important en los atributos de css*/
 .my-header {
   z-index: 999;
   background-color: #433A3F !important;
@@ -10,22 +11,27 @@ body {
   position: absolute;
 }
 
+/*Intentar no usar important en los atributos de css!*/
 .header-text {
   color: #fffefe !important;
 }
 
+/*Intentar no usar important en los atributos de css*/
 .cube1 {
   color: #DF57BC !important;
 }
 
+/*Intentar no usar important en los atributos de css*/
 .cube2 {
   color: #4CE0B3 !important;
 }
 
+/*Intentar no usar important en los atributos de css*/
 .cube3 {
   color: #F4D35E !important;
 }
 
+/*Intentar no usar important en los atributos de css*/
 .cube4 {
   color: #ED6A5E !important;
 }
@@ -65,6 +71,7 @@ body {
   justify-content: center;
   margin: 20px
 }
+/*Intentar no usar important en los atributos de css!*/
 
 #login-buttons-password,
 .login-button {
@@ -158,6 +165,7 @@ body {
   margin-bottom: 10px;
 }
 
+/*Intentar no usar important en los atributos de css!*/
 .newGame-btt {
   border: 2px solid #4CE0B3 !important;
 }

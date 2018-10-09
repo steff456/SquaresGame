@@ -1,3 +1,5 @@
+//comentarios y use strict
+
 import React from 'react';
 import Lobby from '../../components/Lobby/index';
 import Game from '../../components/Game/index';

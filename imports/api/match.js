@@ -1,3 +1,6 @@
+//agregar comentarios al archivo y a los metodos
+//usar strict en los archivos js.
+
 import { Mongo } from 'meteor/mongo';
 import { Meteor } from 'meteor/meteor';
 
