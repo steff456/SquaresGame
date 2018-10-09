@@ -1,3 +1,5 @@
+//intentar usar strict en los archivos javascript, a pesar de que sean creados por meteor
+
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { render } from 'react-dom';
